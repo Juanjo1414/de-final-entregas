@@ -1,0 +1,185 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_athena_workgroup.entregas will be created
+  + resource "aws_athena_workgroup" "entregas" {
+      + arn           = (known after apply)
+      + force_destroy = true
+      + id            = (known after apply)
+      + name          = "entregas_wg"
+      + state         = "ENABLED"
+      + tags_all      = (known after apply)
+
+      + configuration {
+          + enforce_workgroup_configuration    = true
+          + publish_cloudwatch_metrics_enabled = false
+          + requester_pays_enabled             = false
+
+          + result_configuration {
+              + output_location = "s3://de-final-entregas-juanjo1414/resultados-athena/"
+            }
+        }
+    }
+
+  # aws_glue_catalog_database.entregas will be created
+  + resource "aws_glue_catalog_database" "entregas" {
+      + arn          = (known after apply)
+      + catalog_id   = (known after apply)
+      + id           = (known after apply)
+      + location_uri = (known after apply)
+      + name         = "entregas_db"
+      + tags_all     = (known after apply)
+
+      + create_table_default_permission (known after apply)
+    }
+
+  # aws_glue_catalog_table.entregas will be created
+  + resource "aws_glue_catalog_table" "entregas" {
+      + arn           = (known after apply)
+      + catalog_id    = (known after apply)
+      + database_name = "entregas_db"
+      + id            = (known after apply)
+      + name          = "entregas"
+      + parameters    = {
+          + "EXTERNAL"                       = "TRUE"
+          + "classification"                 = "csv"
+          + "projection.enabled"             = "true"
+          + "projection.fecha.format"        = "yyyy-MM-dd"
+          + "projection.fecha.interval"      = "1"
+          + "projection.fecha.interval.unit" = "DAYS"
+          + "projection.fecha.range"         = "2026-10-01,2026-10-03"
+          + "projection.fecha.type"          = "date"
+          + "skip.header.line.count"         = "1"
+          + "storage.location.template"      = "s3://de-final-entregas-juanjo1414/entregas/fecha=${fecha}/"
+        }
+      + table_type    = "EXTERNAL_TABLE"
+
+      + partition_index (known after apply)
+
+      + partition_keys {
+          + name = "fecha"
+          + type = "string"
+        }
+
+      + storage_descriptor {
+          + input_format  = "org.apache.hadoop.mapred.TextInputFormat"
+          + location      = "s3://de-final-entregas-juanjo1414/entregas/"
+          + output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+
+          + columns {
+              + name = "id_envio"
+              + type = "string"
+            }
+          + columns {
+              + name = "ciudad"
+              + type = "string"
+            }
+          + columns {
+              + name = "transportadora"
+              + type = "string"
+            }
+          + columns {
+              + name = "estado"
+              + type = "string"
+            }
+          + columns {
+              + name = "duracion_minutos"
+              + type = "int"
+            }
+
+          + ser_de_info {
+              + name                  = "csv"
+              + parameters            = {
+                  + "field.delim"          = ","
+                  + "serialization.format" = ","
+                }
+              + serialization_library = "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
+            }
+        }
+    }
+
+  # aws_s3_bucket.datos will be created
+  + resource "aws_s3_bucket" "datos" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "de-final-entregas-juanjo1414"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket_public_access_block.datos will be created
+  + resource "aws_s3_bucket_public_access_block" "datos" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = (known after apply)
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + restrict_public_buckets = true
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + base_datos             = "entregas_db"
+  + bucket                 = "de-final-entregas-juanjo1414"
+  + region                 = "us-east-1"
+  + ruta_entregas          = "s3://de-final-entregas-juanjo1414/entregas/"
+  + ruta_resultados_athena = "s3://de-final-entregas-juanjo1414/resultados-athena/"
+  + tabla                  = "entregas"
+  + workgroup              = "entregas_wg"
+aws_glue_catalog_database.entregas: Creating...
+aws_s3_bucket.datos: Creating...
+aws_glue_catalog_database.entregas: Creation complete after 1s [id=052022403573:entregas_db]
+aws_s3_bucket.datos: Creation complete after 2s [id=de-final-entregas-juanjo1414]
+aws_s3_bucket_public_access_block.datos: Creating...
+aws_athena_workgroup.entregas: Creating...
+aws_glue_catalog_table.entregas: Creating...
+aws_s3_bucket_public_access_block.datos: Creation complete after 0s [id=de-final-entregas-juanjo1414]
+aws_athena_workgroup.entregas: Creation complete after 1s [id=entregas_wg]
+aws_glue_catalog_table.entregas: Creation complete after 1s [id=052022403573:entregas_db:entregas]
+
+Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+base_datos = "entregas_db"
+bucket = "de-final-entregas-juanjo1414"
+region = "us-east-1"
+ruta_entregas = "s3://de-final-entregas-juanjo1414/entregas/"
+ruta_resultados_athena = "s3://de-final-entregas-juanjo1414/resultados-athena/"
+tabla = "entregas"
+workgroup = "entregas_wg"
