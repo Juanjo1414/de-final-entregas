@@ -1,0 +1,232 @@
+aws_glue_catalog_database.entregas: Refreshing state... [id=052022403573:entregas_db]
+aws_s3_bucket.datos: Refreshing state... [id=de-final-entregas-juanjo1414]
+aws_s3_bucket_public_access_block.datos: Refreshing state... [id=de-final-entregas-juanjo1414]
+aws_athena_workgroup.entregas: Refreshing state... [id=entregas_wg]
+aws_glue_catalog_table.entregas: Refreshing state... [id=052022403573:entregas_db:entregas]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_athena_workgroup.entregas will be destroyed
+  - resource "aws_athena_workgroup" "entregas" {
+      - arn           = "arn:aws:athena:us-east-1:052022403573:workgroup/entregas_wg" -> null
+      - force_destroy = true -> null
+      - id            = "entregas_wg" -> null
+      - name          = "entregas_wg" -> null
+      - state         = "ENABLED" -> null
+      - tags          = {} -> null
+      - tags_all      = {} -> null
+        # (1 unchanged attribute hidden)
+
+      - configuration {
+          - bytes_scanned_cutoff_per_query     = 0 -> null
+          - enforce_workgroup_configuration    = true -> null
+          - publish_cloudwatch_metrics_enabled = false -> null
+          - requester_pays_enabled             = false -> null
+            # (1 unchanged attribute hidden)
+
+          - engine_version {
+              - effective_engine_version = "Athena engine version 3" -> null
+              - selected_engine_version  = "AUTO" -> null
+            }
+
+          - result_configuration {
+              - output_location       = "s3://de-final-entregas-juanjo1414/resultados-athena/" -> null
+                # (1 unchanged attribute hidden)
+            }
+        }
+    }
+
+  # aws_glue_catalog_database.entregas will be destroyed
+  - resource "aws_glue_catalog_database" "entregas" {
+      - arn          = "arn:aws:glue:us-east-1:052022403573:database/entregas_db" -> null
+      - catalog_id   = "052022403573" -> null
+      - id           = "052022403573:entregas_db" -> null
+      - name         = "entregas_db" -> null
+      - parameters   = {} -> null
+      - tags         = {} -> null
+      - tags_all     = {} -> null
+        # (2 unchanged attributes hidden)
+
+      - create_table_default_permission {
+          - permissions = [
+              - "ALL",
+            ] -> null
+
+          - principal {
+              - data_lake_principal_identifier = "IAM_ALLOWED_PRINCIPALS" -> null
+            }
+        }
+    }
+
+  # aws_glue_catalog_table.entregas will be destroyed
+  - resource "aws_glue_catalog_table" "entregas" {
+      - arn                = "arn:aws:glue:us-east-1:052022403573:table/entregas_db/entregas" -> null
+      - catalog_id         = "052022403573" -> null
+      - database_name      = "entregas_db" -> null
+      - id                 = "052022403573:entregas_db:entregas" -> null
+      - name               = "entregas" -> null
+      - parameters         = {
+          - "EXTERNAL"                       = "TRUE"
+          - "classification"                 = "csv"
+          - "projection.enabled"             = "true"
+          - "projection.fecha.format"        = "yyyy-MM-dd"
+          - "projection.fecha.interval"      = "1"
+          - "projection.fecha.interval.unit" = "DAYS"
+          - "projection.fecha.range"         = "2026-10-01,2026-10-03"
+          - "projection.fecha.type"          = "date"
+          - "skip.header.line.count"         = "1"
+          - "storage.location.template"      = "s3://de-final-entregas-juanjo1414/entregas/fecha=${fecha}/"
+        } -> null
+      - retention          = 0 -> null
+      - table_type         = "EXTERNAL_TABLE" -> null
+        # (4 unchanged attributes hidden)
+
+      - partition_keys {
+          - name    = "fecha" -> null
+          - type    = "string" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - storage_descriptor {
+          - additional_locations      = [] -> null
+          - bucket_columns            = [] -> null
+          - compressed                = false -> null
+          - input_format              = "org.apache.hadoop.mapred.TextInputFormat" -> null
+          - location                  = "s3://de-final-entregas-juanjo1414/entregas/" -> null
+          - number_of_buckets         = 0 -> null
+          - output_format             = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat" -> null
+          - parameters                = {} -> null
+          - stored_as_sub_directories = false -> null
+
+          - columns {
+              - name       = "id_envio" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "ciudad" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "transportadora" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "estado" -> null
+              - parameters = {} -> null
+              - type       = "string" -> null
+                # (1 unchanged attribute hidden)
+            }
+          - columns {
+              - name       = "duracion_minutos" -> null
+              - parameters = {} -> null
+              - type       = "int" -> null
+                # (1 unchanged attribute hidden)
+            }
+
+          - ser_de_info {
+              - name                  = "csv" -> null
+              - parameters            = {
+                  - "field.delim"          = ","
+                  - "serialization.format" = ","
+                } -> null
+              - serialization_library = "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe" -> null
+            }
+        }
+    }
+
+  # aws_s3_bucket.datos will be destroyed
+  - resource "aws_s3_bucket" "datos" {
+      - arn                         = "arn:aws:s3:::de-final-entregas-juanjo1414" -> null
+      - bucket                      = "de-final-entregas-juanjo1414" -> null
+      - bucket_domain_name          = "de-final-entregas-juanjo1414.s3.amazonaws.com" -> null
+      - bucket_regional_domain_name = "de-final-entregas-juanjo1414.s3.us-east-1.amazonaws.com" -> null
+      - force_destroy               = true -> null
+      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null
+      - id                          = "de-final-entregas-juanjo1414" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "us-east-1" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {} -> null
+      - tags_all                    = {} -> null
+        # (3 unchanged attributes hidden)
+
+      - grant {
+          - id          = "59f7fd1f24ce03406a673aae2cbffaf579a1ec9a7417189dbdb1939c9d6f6e22" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm     = "AES256" -> null
+                    # (1 unchanged attribute hidden)
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+  # aws_s3_bucket_public_access_block.datos will be destroyed
+  - resource "aws_s3_bucket_public_access_block" "datos" {
+      - block_public_acls       = true -> null
+      - block_public_policy     = true -> null
+      - bucket                  = "de-final-entregas-juanjo1414" -> null
+      - id                      = "de-final-entregas-juanjo1414" -> null
+      - ignore_public_acls      = true -> null
+      - restrict_public_buckets = true -> null
+    }
+
+Plan: 0 to add, 0 to change, 5 to destroy.
+
+Changes to Outputs:
+  - base_datos             = "entregas_db" -> null
+  - bucket                 = "de-final-entregas-juanjo1414" -> null
+  - region                 = "us-east-1" -> null
+  - ruta_entregas          = "s3://de-final-entregas-juanjo1414/entregas/" -> null
+  - ruta_resultados_athena = "s3://de-final-entregas-juanjo1414/resultados-athena/" -> null
+  - tabla                  = "entregas" -> null
+  - workgroup              = "entregas_wg" -> null
+aws_s3_bucket_public_access_block.datos: Destroying... [id=de-final-entregas-juanjo1414]
+aws_athena_workgroup.entregas: Destroying... [id=entregas_wg]
+aws_glue_catalog_table.entregas: Destroying... [id=052022403573:entregas_db:entregas]
+aws_athena_workgroup.entregas: Destruction complete after 1s
+aws_glue_catalog_table.entregas: Destruction complete after 1s
+aws_glue_catalog_database.entregas: Destroying... [id=052022403573:entregas_db]
+aws_glue_catalog_database.entregas: Destruction complete after 0s
+aws_s3_bucket_public_access_block.datos: Destruction complete after 1s
+aws_s3_bucket.datos: Destroying... [id=de-final-entregas-juanjo1414]
+aws_s3_bucket.datos: Destruction complete after 2s
+
+Destroy complete! Resources: 5 destroyed.
+== head-bucket
+
+aws: [ERROR]: An error occurred (404) when calling the HeadBucket operation: Not Found
+== glue get-database
+
+aws: [ERROR]: An error occurred (EntityNotFoundException) when calling the GetDatabase operation: Database entregas_db not found.
+== athena get-work-group
+
+aws: [ERROR]: An error occurred (InvalidRequestException) when calling the GetWorkGroup operation: WorkGroup is not found.
+
+Additional error details:
+AthenaErrorCode: INVALID_INPUT
