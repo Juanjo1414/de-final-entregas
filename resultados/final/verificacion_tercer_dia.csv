@@ -1,0 +1,7 @@
+id_envio,ciudad,transportadora,estado,duracion_minutos,fecha
+ENV-013,Bogota,RutaNorte,entregado,15,2026-10-03
+ENV-014,Bogota,RutaSur,destinatario_ausente,0,2026-10-03
+ENV-015,Bogota,RutaNorte,destinatario_ausente,0,2026-10-03
+ENV-016,Medellin,RutaSur,entregado,45,2026-10-03
+ENV-017,Medellin,RutaNorte,destinatario_ausente,0,2026-10-03
+ENV-018,Medellin,RutaSur,direccion_incorrecta,0,2026-10-03
