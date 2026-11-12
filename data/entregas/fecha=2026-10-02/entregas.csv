@@ -1,0 +1,7 @@
+id_envio,ciudad,transportadora,estado,duracion_minutos
+ENV-007,Bogota,RutaSur,entregado,25
+ENV-008,Bogota,RutaNorte,direccion_incorrecta,0
+ENV-009,Bogota,RutaSur,destinatario_ausente,0
+ENV-010,Medellin,RutaNorte,entregado,35
+ENV-011,Medellin,RutaSur,entregado,50
+ENV-012,Medellin,RutaNorte,direccion_incorrecta,0

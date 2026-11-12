@@ -1,0 +1,10 @@
+fecha,estado,total_intentos
+2026-10-01,destinatario_ausente,2
+2026-10-01,direccion_incorrecta,1
+2026-10-01,entregado,3
+2026-10-02,destinatario_ausente,1
+2026-10-02,direccion_incorrecta,2
+2026-10-02,entregado,3
+2026-10-03,destinatario_ausente,3
+2026-10-03,direccion_incorrecta,1
+2026-10-03,entregado,2
